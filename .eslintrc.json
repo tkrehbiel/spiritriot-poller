@@ -1,0 +1,8 @@
+{
+  "plugins": [],
+  "env": {
+    "es2022": true,
+    "browser": false
+  },
+  "extends": ["eslint:recommended", "prettier"]
+}

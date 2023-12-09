@@ -1,0 +1,20 @@
+{
+  "name": "poll-blog",
+  "scripts": {
+    "build": "npm install",
+    "run": "node index.mjs",
+    "test": "true",
+    "lint": "eslint",
+    "prettier": "prettier --write ."
+  },
+  "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.468.0",
+    "@aws-sdk/client-sqs": "^3.468.0",
+    "@aws-sdk/credential-providers": "^3.468.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
