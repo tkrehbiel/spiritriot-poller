@@ -177,10 +177,10 @@ async function main() {
   }
 }
 
-exports.handler = async function (event) {
+export async function handler(event) {
   console.log('launching from handler');
   await main();
-};
+}
 
 // Invoke main() if run directly on command line
 if (import.meta.url === `file://${process.argv[1]}`) {
