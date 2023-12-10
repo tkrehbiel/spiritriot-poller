@@ -17,12 +17,10 @@ const startTriggerDate = process.env.START_TRIGGER_DATE;
 const endTriggerDate = process.env.END_TRIGGER_DATE;
 
 const dynamoClient = new DynamoDBClient({
-  region: process.env.AWS_REGION,
   credentials: fromNodeProviderChain(),
 });
 
 const sqsClient = new SQSClient({
-  region: process.env.AWS_REGION,
   credentials: fromNodeProviderChain(),
 });
 
