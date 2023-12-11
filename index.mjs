@@ -144,6 +144,8 @@ async function main() {
     console.log('blog post feed:');
     console.log(posts);
 
+    if (posts.length === 0) return;
+
     const items = await findExistingItems(posts);
 
     console.log('found in state table:');
@@ -154,6 +156,8 @@ async function main() {
 
     console.log('new, untracked posts:');
     console.log(newPosts);
+
+    if (newPosts.length === 0) return;
 
     // Generate notifications for each new post,
     // returning a data store item for each one
