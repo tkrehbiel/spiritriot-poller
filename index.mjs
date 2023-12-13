@@ -3,7 +3,7 @@ import {
   BatchGetItemCommand,
   BatchWriteItemCommand,
 } from '@aws-sdk/client-dynamodb';
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
+import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
 import dotenv from 'dotenv';
 
@@ -12,7 +12,7 @@ dotenv.config({ path: './.env.local' });
 // TODO: sanity checks on the env vars
 const jsonFeedUrl = process.env.JSON_FEED_URL;
 const stateTableName = process.env.STATE_TABLE_NAME;
-const notifyQueueName = process.env.NOTIFY_QUEUE_NAME;
+const notifyTopicArn = process.env.NOTIFY_TOPIC_ARN;
 const startTriggerDate = process.env.START_TRIGGER_DATE;
 const endTriggerDate = process.env.END_TRIGGER_DATE;
 
@@ -20,7 +20,7 @@ const dynamoClient = new DynamoDBClient({
   credentials: fromNodeProviderChain(),
 });
 
-const sqsClient = new SQSClient({
+const snsClient = new SNSClient({
   credentials: fromNodeProviderChain(),
 });
 
@@ -86,11 +86,11 @@ async function detectNewPosts(posts, items) {
 }
 
 async function sendMessage(message) {
-  const command = new SendMessageCommand({
-    QueueUrl: notifyQueueName,
-    MessageBody: JSON.stringify(message),
+  const command = new PublishCommand({
+    TopicArn: notifyTopicArn,
+    Message: JSON.stringify(message),
   });
-  return sqsClient.send(command);
+  return snsClient.send(command);
 }
 
 async function triggerNotifications(posts) {
